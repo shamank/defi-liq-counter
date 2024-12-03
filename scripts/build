@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# for debug:
+# set -ex
+
+PARENT_PATH="$(dirname "$(cd "$("dirname" "$0")"; pwd -P)")"
+
+if [ $# -lt 3 ]
+  then
+    echo "arguments expected are of the form <OS> <PLATFORM> and <VERSION> for the build script , as an example: '/build linux amd64 v1.1.1'"
+    exit 1
+fi
+pushd "$PARENT_PATH" || exit
+mkdir -p builds
+
+ # the name of the binary file
+buildname="liquidity-counter"-$1-$2-$3
+
+# add .exe for windows
+if [ "$1" == "windows" ]
+  then buildname+=".exe"
+fi
+
+CGO_ENABLED=0 GOOS=$1 GOARCH=$2 go build -o builds/"$buildname"
+popd || exit
+
+echo "✅  The tool has been successfully compiled to builds/$buildname"
+
+

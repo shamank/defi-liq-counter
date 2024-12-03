@@ -1,0 +1,12 @@
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+builds
+*.test
+go.work
+.idea
+.config*.json
+config.json
+***-***.json
